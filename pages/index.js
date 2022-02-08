@@ -6,7 +6,20 @@ import Image from 'next/image';
 
 import coffeestores from '../data/coffee-stores.json';
 
-export default function Home() {
+
+
+
+export async function getStaticProps (context) {
+  return {
+    props: {
+      coffeestores,
+    },
+  }
+}
+
+export default function Home(props) {
+
+  console.log(props);
 
   const handleOnBannerBtnClick = () => {
     console.log("Hi banner button!")
@@ -27,8 +40,8 @@ export default function Home() {
         <Image src="/static/man1.png" width={700} height={400} />
         </div>
         <div className={styles.cardLayout}>
-        {coffeestores.map(coffeeStore => {
-        return <Card className={styles.card} name={coffeeStore.name} imgUrl={coffeeStore.imgUrl}
+        {props.coffeestores.map(coffeeStore => {
+        return <Card key={coffeeStore.id} className={styles.card} name={coffeeStore.name} imgUrl={coffeeStore.imgUrl}
          href={`/coffee-store/${coffeeStore.id}`} />})}
         </div>
       </main>
